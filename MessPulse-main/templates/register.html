@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - MessPulse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #f3f7f4 0%, #e8f1ea 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 390px;
+        }
+
+        .register-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 32px 24px 26px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 700;
+            color: #2E7D32;
+            letter-spacing: -0.5px;
+        }
+
+        .brand p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .welcome-box {
+            background: #f6fbf7;
+            border: 1px solid #e2efe4;
+            border-radius: 16px;
+            padding: 14px 14px;
+            margin-bottom: 18px;
+        }
+
+        .welcome-box h2 {
+            margin: 0 0 6px;
+            font-size: 18px;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .welcome-box p {
+            margin: 0;
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .flash-message {
+            background: #fff4f4;
+            color: #c62828;
+            border: 1px solid #f0caca;
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d7e2d9;
+            border-radius: 14px;
+            outline: none;
+            font-size: 14px;
+            background: #fafdfb;
+            transition: 0.2s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #2E7D32;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.10);
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: -4px;
+        }
+
+        .register-btn {
+            margin-top: 4px;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            background: #2E7D32;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .register-btn:hover {
+            background: #25692a;
+        }
+
+        .bottom-text {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .bottom-text a {
+            color: #2E7D32;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .bottom-text a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <div class="register-card">
+
+            <div class="brand">
+                <h1>MessPulse</h1>
+                <p>Smart hostel mess feedback system</p>
+            </div>
+
+            <div class="welcome-box">
+                <h2>Create your account</h2>
+                <p>Register once using your Bennett email to scan meals and submit feedback easily.</p>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="input-group">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Bennett Email</label>
+                    <input type="email" id="email" name="email" placeholder="example@bennett.edu.in" required>
+                    <div class="helper-text">Only Bennett University email IDs are allowed.</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Create Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a secure password" required>
+                </div>
+
+                <button type="submit" class="register-btn">Create Account</button>
+            </form>
+
+            <div class="bottom-text">
+                Already have an account?
+                <a href="{{ url_for('login') }}">Login</a>
+            </div>
+
+            <div class="footer-note">
+                Mess feedback made simpler, cleaner, and smarter.
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='assets/Logo.png') }}" class="logo">
+
+        <a href="/admin/dashboard" class="nav-btn active">Dashboard</a>
+        <a href="/admin/menu" class="nav-btn">Weekly Menu</a>
+        <a href="/admin/reviews" class="nav-btn">Meal Reviews</a>
+        <a href="/admin/analytics" class="nav-btn">Analytics</a>
+        <a href="/admin/scan" class="nav-btn">Scan</a>
+    </div>
+
+    <div class="main">
+
+        <h1>Dashboard</h1>
+        <p class="subtext">Overview of today's mess feedback</p>
+
+        <div class="card-row">
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/star.png') }}" class="icon">
+                <div>
+                    <p>Average Rating</p>
+                    <h2>{{ data.avg_rating }}</h2>
+                    <small>{{ data.total_reviews }} reviews today</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/summary.png') }}" class="icon">
+                <div>
+                    <p>Summary Comments</p>
+                    <small>{{ data.summary }}</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-row">
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/meal.png') }}" class="icon">
+                <div>
+                    <p>Top Issue</p>
+                    <h2 style="font-size: 18px;">{{ data.top_issue }}</h2>
+                    <small>{{ data.issue_count }} mentions</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/calendar.png') }}" class="icon">
+                <div>
+                    <p>Participation Rate</p>
+                    <h2>{{ data.participation_rate }}%</h2>
+                    <small>{{ data.total_reviews }} reviews / {{ data.total_scans }} scans</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-row">
+
+            <div class="box">
+                <h3>Meal Review</h3>
+
+                <table>
+                    <tr>
+                        <th>Meal</th>
+                        <th>Average Stars</th>
+                        <th>Status</th>
+                    </tr>
+
+                    {% for meal in data.meals %}
+                    <tr>
+                        <td>{{ meal.name }}</td>
+                        <td>{{ meal.rating }}</td>
+                        <td>{{ meal.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="box">
+                <h3>Feedback trend (this week)</h3>
+                <canvas id="chart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    window.chartLabels = {{ data.trend_labels | tojson }};
+    window.chartValues = {{ data.trend_values | tojson }};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</body>
+</html>

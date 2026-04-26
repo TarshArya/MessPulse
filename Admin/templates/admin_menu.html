@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weekly Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='assets/Logo.png') }}" class="logo">
+
+        <a href="/admin/dashboard" class="nav-btn">Dashboard</a>
+        <a href="/admin/menu" class="nav-btn active">Weekly Menu</a>
+        <a href="/admin/reviews" class="nav-btn">Meal Reviews</a>
+        <a href="/admin/analytics" class="nav-btn">Analytics</a>
+        <a href="/admin/scan" class="nav-btn">Scan</a>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+        <h1>Weekly Menu</h1>
+
+        <!-- Week Selector -->
+        <div class="week-selector">
+            <img src="{{ url_for('static', filename='assets/calendar.png') }}" class="icon">
+            <p>Week starting: {{ week_start_date }}</p>
+        </div>
+
+        {% if success_message %}
+        <p style="color: green; font-weight: bold; margin: 10px 0 15px 0;">
+            {{ success_message }}
+        </p>
+        {% endif %}
+
+        <form method="POST" action="/admin/menu">
+
+            <!-- Menu Table -->
+            <div class="menu-table">
+                <table>
+                    <tr>
+                        <th>Day</th>
+                        <th>Breakfast</th>
+                        <th>Lunch</th>
+                        <th>Snacks</th>
+                        <th>Dinner</th>
+                    </tr>
+
+                    {% for day, meals in menu.items() %}
+                    <tr>
+                        <td>{{ day }}</td>
+
+                        <td>
+                            <input
+                                type="text"
+                                name="{{ day.lower() }}_breakfast"
+                                value="{{ meals.breakfast }}"
+                            >
+                        </td>
+
+                        <td>
+                            <input
+                                type="text"
+                                name="{{ day.lower() }}_lunch"
+                                value="{{ meals.lunch }}"
+                            >
+                        </td>
+
+                        <td>
+                            <input
+                                type="text"
+                                name="{{ day.lower() }}_snacks"
+                                value="{{ meals.snacks }}"
+                            >
+                        </td>
+
+                        <td>
+                            <input
+                                type="text"
+                                name="{{ day.lower() }}_dinner"
+                                value="{{ meals.dinner }}"
+                            >
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <!-- Save Button -->
+            <div class="save-section">
+                <button type="submit" class="save-btn">
+                    <img src="{{ url_for('static', filename='assets/save.png') }}">
+                    Save Menu
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

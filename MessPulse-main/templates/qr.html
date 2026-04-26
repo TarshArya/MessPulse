@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Scan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/qr.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">MessPulse</div>
+
+        <div class="today-menu">
+            <h2>Today's {{ selected_meal.capitalize() }} Menu ({{ today_menu.day }})</h2>
+            <p>
+                <strong>{{ selected_meal.capitalize() }}:</strong>
+                {{ selected_meal_value }}
+            </p>
+        </div>
+
+        <div class="qr-card">
+            <h1>Scan QR to Continue</h1>
+            <p class="meal-name">{{ selected_meal.capitalize() }}</p>
+
+            <div class="qr-image">
+                <img src="{{ url_for('static', filename='Thumbnails/qr.png') }}" alt="QR Code">
+            </div>
+
+            <form method="POST" action="/scan-complete">
+                <input type="hidden" name="meal" value="{{ selected_meal }}">
+                <button type="submit" class="scan-btn">Scanned!</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

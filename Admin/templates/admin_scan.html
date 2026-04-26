@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <style>
+        .scan-box {
+            background: white;
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            max-width: 700px;
+        }
+
+        .meal-select {
+            margin-bottom: 18px;
+        }
+
+        .meal-select select {
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        #reader {
+            width: 100%;
+            max-width: 420px;
+            margin-top: 15px;
+        }
+
+        .scan-status {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 12px;
+            background: #f4f7f4;
+            border: 1px solid #d9e7db;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='assets/Logo.png') }}" class="logo">
+
+        <a href="/admin/dashboard" class="nav-btn">Dashboard</a>
+        <a href="/admin/menu" class="nav-btn">Weekly Menu</a>
+        <a href="/admin/reviews" class="nav-btn">Meal Reviews</a>
+        <a href="/admin/analytics" class="nav-btn">Analytics</a>
+        <a href="/admin/scan" class="nav-btn active">Scan</a>
+    </div>
+
+    <div class="main">
+        <h1>Scan Student QR</h1>
+        <p class="subtext">Select the meal, then scan the student QR to mark them served.</p>
+
+        <div class="scan-box">
+            <div class="meal-select">
+                <label for="mealType"><strong>Select Meal:</strong></label><br><br>
+                <select id="mealType">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="dinner">Dinner</option>
+                </select>
+            </div>
+
+            <div id="reader"></div>
+
+            <div id="scanStatus" class="scan-status">
+                Waiting for scan...
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let isProcessing = false;
+
+    function onScanSuccess(decodedText, decodedResult) {
+        if (isProcessing) return;
+
+        const mealType = document.getElementById("mealType").value;
+        const statusBox = document.getElementById("scanStatus");
+
+        if (!mealType) {
+            statusBox.innerText = "Please select a meal first.";
+            return;
+        }
+
+        isProcessing = true;
+        statusBox.innerText = "Processing scan...";
+
+        fetch("/admin/mark-served", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                qr_token: decodedText,
+                meal_type: mealType
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            statusBox.innerText = data.message || "Done";
+            setTimeout(() => {
+                isProcessing = false;
+            }, 2000);
+        })
+        .catch(error => {
+            statusBox.innerText = "Something went wrong while processing scan.";
+            setTimeout(() => {
+                isProcessing = false;
+            }, 2000);
+        });
+    }
+
+    const scanner = new Html5QrcodeScanner(
+        "reader",
+        { fps: 10, qrbox: 250 },
+        false
+    );
+
+    scanner.render(onScanSuccess);
+</script>
+
+</body>
+</html>

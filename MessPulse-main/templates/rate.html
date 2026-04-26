@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/rate.css') }}">
+  <title>Rate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    .issue-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 16px;
+      justify-content: center;
+    }
+
+    .issue-tag {
+      padding: 8px 14px;
+      border: 1px solid #d7d7d7;
+      border-radius: 20px;
+      background: #f7f7f7;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s ease;
+      user-select: none;
+    }
+
+    .issue-tag.active {
+      background: #2E7D32;
+      color: white;
+      border-color: #2E7D32;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: none;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid #ddd;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      box-sizing: border-box;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page3">
+
+  <div class="logo-text">MessPulse</div>
+
+  <div class="card">
+
+    <h2 class="meal-title">Rate Today's Meal</h2>
+
+    <p class="meal-type" id="mealName">{{ selected_meal.capitalize() }}</p>
+
+    <form method="POST" action="{{ url_for('submit_review') }}">
+      <input type="hidden" name="meal_type" value="{{ selected_meal }}">
+      <input type="hidden" name="meal_date" value="{{ meal_date }}">
+      <input type="hidden" name="rating" id="ratingInput">
+
+      <div class="stars">
+        <span data-value="1">★</span>
+        <span data-value="2">★</span>
+        <span data-value="3">★</span>
+        <span data-value="4">★</span>
+        <span data-value="5">★</span>
+      </div>
+
+      <div class="issue-tags">
+        <span class="issue-tag" data-text="Cold food">Cold</span>
+        <span class="issue-tag" data-text="Too oily">Oily</span>
+        <span class="issue-tag" data-text="Too spicy">Spicy</span>
+        <span class="issue-tag" data-text="Bland taste">Bland</span>
+        <span class="issue-tag" data-text="Less quantity">Less Quantity</span>
+        <span class="issue-tag" data-text="Tasty food">Tasty</span>
+      </div>
+
+      <textarea name="review_text" id="reviewText" placeholder="Add optional comment..."></textarea>
+
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+  </div>
+
+</div>
+
+<script>
+  const stars = document.querySelectorAll(".stars span");
+  const ratingInput = document.getElementById("ratingInput");
+  let rating = 0;
+
+  stars.forEach(star => {
+    star.addEventListener("click", () => {
+      rating = star.getAttribute("data-value");
+      ratingInput.value = rating;
+
+      stars.forEach(s => {
+        if (s.getAttribute("data-value") <= rating) {
+          s.style.color = "#2E7D32";
+        } else {
+          s.style.color = "#ccc";
+        }
+      });
+    });
+  });
+
+  document.querySelector("form").addEventListener("submit", function(e) {
+    if (!ratingInput.value) {
+      e.preventDefault();
+      alert("Please select a rating before submitting.");
+    }
+  });
+
+  const issueTags = document.querySelectorAll(".issue-tag");
+  const reviewText = document.getElementById("reviewText");
+
+  issueTags.forEach(tag => {
+    tag.addEventListener("click", () => {
+      tag.classList.toggle("active");
+
+      const selectedTexts = [];
+      document.querySelectorAll(".issue-tag.active").forEach(activeTag => {
+        selectedTexts.push(activeTag.getAttribute("data-text"));
+      });
+
+      const currentCustomText = reviewText.value
+        .split(" | ")
+        .filter(part =>
+          !["Cold food", "Too oily", "Too spicy", "Bland taste", "Less quantity", "Tasty food"].includes(part)
+        )
+        .join(" | ")
+        .trim();
+
+      let finalText = selectedTexts.join(" | ");
+      if (currentCustomText) {
+        finalText = finalText ? finalText + " | " + currentCustomText : currentCustomText;
+      }
+
+      reviewText.value = finalText;
+    });
+  });
+</script>
+
+</body>
+</html>

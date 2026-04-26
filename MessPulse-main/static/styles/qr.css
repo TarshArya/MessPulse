@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #e9e9e9;
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile container */
+.page,
+.container {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  background: white;
+  padding: 30px 20px;
+}
+
+/* Header */
+.logo-text,
+.logo {
+  color: #2E7D32;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+/* Today's menu section */
+.today-menu {
+  background: #f7f7f7;
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.today-menu h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.today-menu p {
+  color: #444;
+  line-height: 1.5;
+}
+
+/* Card */
+.card,
+.qr-card {
+  background: #f7f7f7;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.card h2,
+.qr-card h1 {
+  font-size: 20px;
+}
+
+.card p,
+.qr-card p {
+  margin-top: 5px;
+  color: #666;
+}
+
+.meal-name {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 8px;
+  color: #2E7D32;
+}
+
+/* QR */
+.qr-box,
+.qr-image {
+  margin: 25px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-box img,
+.qr-image img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Button */
+.submit-btn,
+.scan-btn {
+  width: 100%;
+  height: 45px;
+  border-radius: 20px;
+  border: none;
+  background: #2E7D32;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-btn:active,
+.scan-btn:active {
+  opacity: 0.8;
+}

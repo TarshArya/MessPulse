@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meal Reviews</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='assets/Logo.png') }}" class="logo">
+
+        <a href="/admin/dashboard" class="nav-btn">Dashboard</a>
+        <a href="/admin/menu" class="nav-btn">Weekly Menu</a>
+        <a href="/admin/reviews" class="nav-btn active">Meal Reviews</a>
+        <a href="/admin/analytics" class="nav-btn">Analytics</a>
+        <a href="/admin/scan" class="nav-btn">Scan</a>
+    </div>
+
+    <div class="main">
+
+        <h1>Meal Reviews</h1>
+        <p class="subtext">Live review insights from actual student feedback</p>
+
+        <div class="card-row">
+
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/star.png') }}">
+                <div>
+                    <p>Average Rating</p>
+                    <h2>{{ data.avg_rating }}</h2>
+                </div>
+            </div>
+
+            <div class="card">
+                <img class="alert" src="{{ url_for('static', filename='assets/summary.png') }}">
+                <div>
+                    <p>Total Reviews</p>
+                    <h2>{{ data.total_reviews }}</h2>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="{{ url_for('static', filename='assets/alert.png') }}">
+                <div>
+                    <p>Most Common Issue</p>
+                    <h2>{{ data.top_issue }}</h2>
+                    <small>{{ data.issue_count }} mentions</small>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bottom-row">
+
+            <div class="box chart-box">
+                <h3>Issue Distribution</h3>
+                <canvas id="donutChart"></canvas>
+            </div>
+
+            <div class="box">
+                <h3>Feedback trend (this week)</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+
+        </div>
+
+        <div class="box" style="margin-top: 20px;">
+            <h3>Recent Review Comments</h3>
+
+            {% if data.recent_reviews %}
+                {% for review in data.recent_reviews %}
+                <div class="review-card" style="margin-bottom: 14px;">
+                    <div class="stars">
+                        {% for i in range(review.rating) %}⭐{% endfor %}
+                    </div>
+                    <p><strong>{{ review.meal_type }}</strong> • {{ review.meal_date }}</p>
+                    <p>{{ review.review_text }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No review comments available yet.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    window.issueLabels = {{ data.issue_labels | tojson }};
+    window.issueValues = {{ data.issue_values | tojson }};
+    window.reviewTrendLabels = {{ data.trend_labels | tojson }};
+    window.reviewTrendValues = {{ data.trend_values | tojson }};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/reviews.js') }}"></script>
+
+</body>
+</html>

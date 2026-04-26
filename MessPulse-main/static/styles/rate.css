@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #e9e9e9;
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile container */
+.page3 {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  background: white;
+  padding: 30px 20px;
+}
+
+/* Header */
+.logo-text {
+  color: #2E7D32;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* Card */
+.card {
+  background: #f7f7f7;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+/* Meal title */
+.meal-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.meal-type {
+  margin-top: 5px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Stars */
+.stars {
+  margin: 20px 0;
+}
+
+.stars span {
+  font-size: 28px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.stars span:hover {
+  color: #2E7D32;
+}
+
+/* Comment */
+textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  resize: none;
+  margin-top: 10px;
+}
+
+/* Button */
+.submit-btn {
+  width: 100%;
+  height: 45px;
+  margin-top: 20px;
+  border-radius: 20px;
+  border: none;
+  background: #2E7D32;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-btn:active {
+  opacity: 0.8;
+}
+
+.stars span {
+  font-size: 28px;
+  color: #ccc;
+  cursor: pointer;
+  transition: 0.2s;
+}

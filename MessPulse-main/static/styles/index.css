@@ -1,0 +1,197 @@
+* {
+  margin:0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #e9e9e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh
+}
+
+
+.Page1 {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  background: white;
+  padding: 30px 20px;
+}
+
+.Logo {
+  display:grid;
+  grid-row: auto;
+  justify-content: center;
+}
+
+.Logo1 {
+  width: 200px;
+  margin-top: 20px;
+  cursor: default;
+}
+
+.WelcomeSign {
+  display: grid;
+  grid-row: auto;
+}
+
+.Welcome {
+  text-align: center;
+  font-size: 28px;
+  font-weight:600;
+  margin-top: 30px;
+  cursor: default;
+
+}
+
+.text {
+  display: grid;
+  grid-row: auto;
+}
+
+.text1 {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgb(82, 78, 78);
+  text-align: center;
+  margin-top: 2px;
+  cursor: default;
+}
+
+.Box1 {
+  display: grid;
+  grid-row: 40px;
+  justify-content: center;
+
+}
+
+
+
+.Email {
+  background-color: rgba(233, 245, 231, 0.4);
+  opacity: 1;
+  margin-top: 30px;
+  padding-left: 40px;
+  padding-bottom: 10px;
+  padding-right: 40px;
+  padding-top: 10px;
+  font-size: 17px;
+  font-weight: 400;
+  border-radius: 17px;
+  border-style:solid;
+  border-width: 0.8px;
+  border-color: rgba(167, 179, 165, 1);
+
+}
+
+.Box2 {
+  display: grid;
+  grid-row: auto;
+  justify-content: center;
+}
+
+.password {
+  background-color: rgba(233, 245, 231, 0.4);
+  margin-top: 20px;
+  padding-left: 40px;
+  padding-bottom: 10px;
+  padding-right: 40px;
+  padding-top: 10px;
+  font-size: 17px;
+  border-radius: 17px;
+  border-style:solid;
+  border-width: 0.8px;
+  border-color: rgba(167, 179, 165, 1);
+
+}
+
+.login {
+  display: grid;
+  grid: auto;
+  justify-content: center;
+  
+}
+
+.login1 {
+  text-align: center;
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  margin-top: 40px;
+  background-color: rgba(46, 125, 50, 1);
+  color: white;
+  font-size: 17px;
+  border-radius: 80px;
+  border:none;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+
+}
+
+.login1:active {
+  opacity: 0.8;
+}
+
+.separator {
+  display: flex; 
+  align-items: center;
+  text-align: center; 
+  color: black;
+  font-weight: 500;
+  margin-top: 20px;
+  cursor: default;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #333;
+}
+
+.separator::before {
+  margin-right: 15px;
+}
+
+.separator::after {
+  margin-left: 15px;
+}
+
+
+.button1 {
+  display: grid;
+  grid-template-columns:  auto;
+  justify-content: center;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.microsoft {
+  background-color: white;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border:none;
+  border-radius: 16px;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.microsoft1 {
+  width: 25px;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
